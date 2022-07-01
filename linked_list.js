@@ -9,13 +9,13 @@ class Node {
 }
 // create class for LinkedList
 class LinkedList {
-    constructor (head=null) {
+    constructor (head = null) {
         this.head = head;// link to the first node
         this.length = 0;// number of all nodes in Linked List
     }
 
-    addToTheEnd(value) {
-        let node = new Node(value);//creating the node using class Node
+    addToTheEnd(data) {
+        let node = new Node(data);//creating the node using class Node
         if(this.length === 0) {
             this.head = node; //if there are no nodes
         } else {
@@ -23,9 +23,35 @@ class LinkedList {
             while(current.next) {
                 current = current.next;
             }
-            current.next = new Node(value);
+            current.next = new Node(data);
         }
         this.length++;
+        return 'done';
+    }
+
+    insertInPosition(position, data) {
+        if(position < 0 || position > this.length) {
+            return 'Incorrect value of position';
+        }
+        let node = new Node(data);
+        if( position === 0) {
+            node.next = this.head;
+            this.head = node;
+        } else {
+            let current = this.head;
+            let prev = null;
+            let index = 0;
+
+            while (index < position) {
+                prev = current;
+                current = current.next;
+                index++;
+            }
+            prev.next = node;
+            node.next = current;
+        }
+        this.length++;
+        return 'done';
     }
 
     size() {
@@ -52,11 +78,26 @@ class LinkedList {
     getFirst() {
         return this.head;
     }
+
+    getNodeByPosition(position) {
+        if(position < 0 || position > this.length) {
+            return "Incorrect value of position"
+        }
+
+        let current = this.head;
+        let index = 0;
+
+        while(index < position) {
+            current = current.next;
+            index++;
+        }
+        return current.data; 
+    }
     print() {
         let current = this.head;
         
         while(current) {
-            console.log("Node: " + current.value);
+            console.log(`Node:${current.data}`);
             current = current.next;
         }
     }
@@ -71,6 +112,9 @@ function testLinkedList() {
     console.log('add 10',list.addToTheEnd(10));
     console.log('add 15',list.addToTheEnd(15));
     console.log('after',list.print(),list.size());
+    console.log('getNodeByPosition: ', list.getNodeByPosition(1));
+    console.log('insertInPosition: ', list.insertInPosition(1,77));
+    console.log('getNodeByPosition: ', list.getNodeByPosition(1));
 
 }
 
