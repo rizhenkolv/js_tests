@@ -93,6 +93,30 @@ class LinkedList {
         }
         return current.data; 
     }
+
+    removeFromPosition(position) {
+        if(position < 0 || position > this.length) {
+            return "Incorrect value of position"
+        }
+        let current = this.head;
+
+        if(position === 0) {
+            this.head = current.next;
+        } else {
+            let prev = null;
+            let index = 0;
+
+            while(index < position) {
+                prev = current;
+                current = current.next;
+                index++;
+            }
+            prev.next = current.next;
+        }
+        this.length--;
+        return current.data;
+
+    }
     print() {
         let current = this.head;
         
@@ -115,6 +139,9 @@ function testLinkedList() {
     console.log('getNodeByPosition: ', list.getNodeByPosition(1));
     console.log('insertInPosition: ', list.insertInPosition(1,77));
     console.log('getNodeByPosition: ', list.getNodeByPosition(1));
+    // console.log('removeFromPosition: ', list.removeFromPosition(1));
+    // console.log('getNodeByPosition: ', list.getNodeByPosition(1));
+    console.log(list.print());
 
 }
 
